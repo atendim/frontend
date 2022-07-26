@@ -13,16 +13,16 @@ Requires [Node.js](https://nodejs.org/) v14+ to run.
 Install the dependencies and devDependencies and start the server.
 
 ### Clone the application
-	```sh
-	git clone https://github.com/atendim/frontend.git
-	```
+```sh
+git clone https://github.com/atendim/frontend.git
+```
   
 ### Start Web
-	```sh
-    cd frontend
-    yarn dev
-	```
-  Will start running at [http://localhost:3000](http://localhost:8080/)
+```sh
+cd frontend
+yarn dev
+```
+Will start running at [http://localhost:3000](http://localhost:8080/)
   
   
   
