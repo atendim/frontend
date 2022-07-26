@@ -1,0 +1,47 @@
+{
+  "label": {
+    "login": "Login",
+    "password": "Senha",
+    "email": "E-mail",
+    "user": "Usuário",
+    "signUp": "Registrar",
+    "signIn": "Entrar",
+    "continue": "Continuar",
+    "search": "Buscar",
+    "exit": "Sair",
+    "appointments": "Atendimentos",
+    "newAppointment": "Novo Atendimento",
+    "goBack": "Voltar",
+    "edit": "Editar",
+    "save": "Salvar",
+    "delete": "Excluir",
+    "description": "Descrição",
+    "price": "Preço",
+    "date": "Data",
+    "time": "Horário",
+    "customer": "Cliente",
+    "finishedAppointment": "Atendimento Finalizado",
+    "observation": "Observação",
+    "yesDeleteRecord": "Sim, deletar registro",
+    "cancel": "Cancelar",
+    "selectCustumer": "Selecione um cliente...",
+    "custumer":"Cliente",
+    "editCustomer": "Editar Cliente",
+    "createNewCustomer": "Criar Novo Cliente",
+    "phone": "Telefone",
+    "name": "Nome"
+  },
+  "messages": {
+    "signUp": "Não possui uma conta? Registre-se.",
+    "signIn": "Possui uma conta? Entre.",
+    "successfullyRegistered": "Cadastro realizado com sucesso!",
+    "noAppointmentFound": "Nenhum atendimento encontrado!",
+    "deleteDialogTitle": "Deseja deletar este registro?",
+    "deleteDialogContent": "Essa ação não poderá ser desfeita. Isto irá deletar permanentemente este registro."
+  },
+  "errors": {
+    "wrongEmailPassword": "Email ou senha incorretos",
+    "emailAlreadyUsed": "Email já utilizado!",
+    "errorLoadingFeed": "Ocorreu um erro ao carregar o feed!"
+  }
+}

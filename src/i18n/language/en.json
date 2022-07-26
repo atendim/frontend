@@ -1,0 +1,46 @@
+{
+  "label": {
+    "login": "Login",
+    "password": "Passoword",
+    "email": "E-mail",
+    "user": "User",
+    "signUp": "Sign Up",
+    "signIn": "Sign In",
+    "continue": "Continue",
+    "search": "Search",
+    "exit": "Exit",
+    "appointments": "Appointments",
+    "newAppointment": "New Appointment",
+    "goBack": "Go Back",
+    "edit": "Edit",
+    "save": "Save",
+    "delete": "Delete",
+    "description": "Description",
+    "price":"Price",
+    "date": "Date",
+    "time": "Time",
+    "customer": "Customer",
+    "finishedAppointment": "Finished appointment",
+    "observation": "observation",
+    "yesDeleteRecord": "yes, delete record",
+    "cancel": "Cancel",
+    "selectCustumer": "Select Customer...",
+    "custumer":"Customer",
+    "editCustomer": "Edit Customer",
+    "createNewCustomer": "Create new customer",
+    "phone": "Phone",
+    "name": "Name"
+  },
+  "messages": {
+    "signUp": "Don't have an account? Sign up.",
+    "signIn": "Already has an account? Sign In.",
+    "successfullyRegistered": "Successfully registered",
+    "noAppointmentFound": "No appointment found!",
+    "deleteDialogTitle": "Are you absolutely sure?",
+    "deleteDialogContent": "This action cannot be undone. This will permanently delete this record"
+  },
+  "errors": {
+    "wrongEmailPassword": "Incorrect email or password",
+    "emailAlreadyUsed": "Email already used!"
+  }
+}
