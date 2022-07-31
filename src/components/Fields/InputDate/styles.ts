@@ -61,6 +61,10 @@ export const Container = styled('div', ContainerBase, {
     border: 'none'
   },
 
+  '.react-datepicker__current-month': {
+    marginBottom: '$2'
+  },
+
   '.react-datepicker__time-container': {
     width: 150,
   },
@@ -89,7 +93,6 @@ export const Container = styled('div', ContainerBase, {
   '.react-datepicker__time-container .react-datepicker__time .react-datepicker__time-box': {
     width: '100%',
   },
-
 })
 
 export const Label = styled('label', LabelBase);
