@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
+import CurrencyInput from 'react-currency-input-field';
 import { useIntl } from 'react-intl';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { Flex } from '../../components/base/Utils';
@@ -6,6 +7,7 @@ import Checkbox from '../../components/Checkbox';
 import CustomerModal from '../../components/CustomerModal';
 import { CustomerSelect } from '../../components/CustomerSelect';
 import DialogDelete from '../../components/DialogDelete';
+import InputCurrency from '../../components/Fields/InputCurrency';
 import { InputText } from '../../components/Fields/InputText';
 import InputTextArea from '../../components/Fields/InputTextArea';
 import Select from '../../components/Select';
@@ -21,7 +23,7 @@ import { Container, DateWrapper, StatusWrapper } from './styles';
 
 const ScheduleForm: React.FC = () => {
   const { user } = useAuth();
-  const { formatDate, formatTime, formatNumber } = useIntl();
+  const { formatDate, formatTime, formatNumber,  } = useIntl();
   const { showError, showSuccess } = useToast();
   const navigate = useNavigate();
   const { idSchedule } = useParams();
@@ -68,15 +70,15 @@ const ScheduleForm: React.FC = () => {
     }
   }
 
-  const handleChange = (event: any) => {
+  const handleChange = useCallback((event: any) => {
     if (schedule) {
       setSchudule({
         ...schedule,
         [event.target.name]: event.target.value
       })
     }
-  }
-
+  }, [schedule])
+  
   return (
     <>
       <Container>
@@ -118,20 +120,13 @@ const ScheduleForm: React.FC = () => {
                 onChange={handleChange}
               />
             </DateWrapper>
-            <InputText
+            <InputCurrency
               name="price"
-              value={formatNumber(schedule.price || 0, { style: 'currency', currency: 'BRL' })}
+              value={schedule.price}
               idLabel="label.price"
               disabled={!allowEdit}
-              onChange={handleChange}
+              handleChange={(value) => setSchudule({...schedule, price: value})}
             />
-            {/*             <InputText
-              name="client"
-              value={schedule.client}
-              idLabel="label.customer"
-              disabled
-              onChange={handleChange}
-            /> */}
             <Checkbox
               idLabel='label.finishedAppointment'
               checked={schedule.finished}

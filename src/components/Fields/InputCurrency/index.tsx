@@ -1,31 +1,49 @@
 import { CSS } from '@stitches/react';
-import React, { useCallback } from 'react';
-import CurrencyInput, { CurrencyInputProps } from 'react-currency-input-field';
+import React, { useCallback, useRef } from 'react';
+import CurrencyInput, { CurrencyInputProps, formatValue } from 'react-currency-input-field';
 import { useIntl } from 'react-intl';
 import { Container, CurrencyInputStyled, Label } from './styles';
 
 
 type InputCurrencyType = React.PropsWithoutRef<CurrencyInputProps> & {
   idLabel?: string;
-  cssContainer?: CSS
+  cssContainer?: CSS;
+  handleChange: (value: number) => void;
+  name: string;
+  value?: number;
 }
 
 const InputCurrency: React.FC<InputCurrencyType> = (
-  { name, value, disabled, onValueChange, children, ...props }
+  { name, value, disabled, handleChange, children, ...props }
 ) => {
-  const { locale, formatMessage } = useIntl();
+  const { formatMessage } = useIntl();
+  const strValue = useRef<string>(value?.toString() || "0.50")
+  console.log(strValue, value)
 
   const handleArrowKeys = useCallback((e?: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e && onValueChange) {
-      if ("ArrowUp" === e.key) {
-        console.log(Number(value))
-        onValueChange((Number(value) + 1).toString(), name);
-        
-      } else if ("ArrowDown" === e.key) {
-        onValueChange((Number(value) - 1).toString(), name)
-      }
+    if (e && ["ArrowUp", "ArrowDown"].includes(e.key)) {
+      let numValue = refineNumber(strValue.current);
+
+      strValue.current = formatValue({
+        value: (e.key === "ArrowDown" ? numValue - 1 : numValue + 1).toString(),
+        groupSeparator: '.',
+        decimalSeparator: ","
+      })
+
+      handleChange(refineNumber(strValue.current))
     }
-  }, [value])
+  }, [value, strValue.current]);
+
+  const onChangeValue = useCallback((valueChanged?: string) => {
+    if (valueChanged) {
+      strValue.current = valueChanged;
+      handleChange(refineNumber(valueChanged))
+    }
+  }, [value, strValue.current])
+
+  const refineNumber = (value: string) => {
+    return Number(value.replace(",", "."));
+  }
 
   return (
     <Container css={props.cssContainer}>
@@ -33,12 +51,14 @@ const InputCurrency: React.FC<InputCurrencyType> = (
         <Label>{formatMessage({ id: props.idLabel })}</Label>
       }
       <CurrencyInputStyled
-        intlConfig={{ locale, currency: 'BRL' }}
+        intlConfig={{ locale: 'pt-BR', currency: 'BRL' }}
         name={name}
-        value={value}
+        value={strValue.current}
         disabled={disabled}
-        onValueChange={onValueChange}
+        onValueChange={onChangeValue}
         onKeyDown={handleArrowKeys}
+        allowNegativeValue={false}
+        fixedDecimalLength={2}
       />
       {children}
     </Container>
