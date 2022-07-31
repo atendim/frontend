@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { ReactDatePickerProps, registerLocale } from 'react-datepicker';
 import { useIntl } from 'react-intl';
 import { Container, DatePickerStyled, Label } from './styles';
@@ -11,7 +11,7 @@ type InputDate = ReactDatePickerProps & {
   idLabel: string;
 }
 
-const InputDate: React.FC<InputDate> = ({ idLabel, dateFormat = "P", ...props }) => {
+const InputDate: React.FC<InputDate> = ({ idLabel, selected, dateFormat = "P", ...props }) => {
   const { formatMessage } = useIntl();
 
   return (
@@ -20,6 +20,7 @@ const InputDate: React.FC<InputDate> = ({ idLabel, dateFormat = "P", ...props })
         <Label>{formatMessage({ id: idLabel })}</Label>
       }
       <DatePickerStyled
+        selected={new Date(selected)}
         minDate={new Date()}
         locale={"ptBR"}
         dateFormat={dateFormat}
