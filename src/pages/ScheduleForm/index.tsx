@@ -8,8 +8,10 @@ import CustomerModal from '../../components/CustomerModal';
 import { CustomerSelect } from '../../components/CustomerSelect';
 import DialogDelete from '../../components/DialogDelete';
 import InputCurrency from '../../components/Fields/InputCurrency';
+import InputDate from '../../components/Fields/InputDate';
 import { InputText } from '../../components/Fields/InputText';
 import InputTextArea from '../../components/Fields/InputTextArea';
+import InputTime from '../../components/Fields/InputTime';
 import Select from '../../components/Select';
 import { ToolBarForm } from '../../components/ToolBarForm';
 import { useAuth } from '../../contexts/auth';
@@ -105,19 +107,19 @@ const ScheduleForm: React.FC = () => {
               onChange={handleChange}
             />
             <DateWrapper>
-              <InputText
+              <InputDate
                 name="appointment"
-                value={formatDate(schedule.appointment)}
+                selected={schedule.appointment}
                 idLabel="label.date"
                 disabled={!allowEdit}
-                onChange={handleChange}
+                onChange={(newDate: Date) => setSchudule({...schedule, appointment: newDate})}
               />
-              <InputText
+              <InputTime
                 name="appointment"
-                value={formatTime(schedule.appointment)}
+                selected={schedule.appointment}
                 idLabel="label.time"
                 disabled={!allowEdit}
-                onChange={handleChange}
+                onChange={(newDate: Date) => setSchudule({...schedule, appointment: newDate})}
               />
             </DateWrapper>
             <InputCurrency
