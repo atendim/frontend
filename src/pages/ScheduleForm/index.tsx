@@ -11,6 +11,7 @@ import InputCurrency from '../../components/Fields/InputCurrency';
 import InputDate from '../../components/Fields/InputDate';
 import { InputText } from '../../components/Fields/InputText';
 import InputTextArea from '../../components/Fields/InputTextArea';
+import InputTime from '../../components/Fields/InputTime';
 import Select from '../../components/Select';
 import { ToolBarForm } from '../../components/ToolBarForm';
 import { useAuth } from '../../contexts/auth';
@@ -108,17 +109,17 @@ const ScheduleForm: React.FC = () => {
             <DateWrapper>
               <InputDate
                 name="appointment"
-                value={schedule.appointment}
+                selected={schedule.appointment}
                 idLabel="label.date"
                 disabled={!allowEdit}
-                onChange={(newDate) => setSchudule({...schedule, appointment: newDate})}
+                onChange={(newDate: Date) => setSchudule({...schedule, appointment: newDate})}
               />
-              <InputText
+              <InputTime
                 name="appointment"
-                value={formatTime(schedule.appointment)}
+                selected={schedule.appointment}
                 idLabel="label.time"
                 disabled={!allowEdit}
-                onChange={handleChange}
+                onChange={(newDate: Date) => setSchudule({...schedule, appointment: newDate})}
               />
             </DateWrapper>
             <InputCurrency
