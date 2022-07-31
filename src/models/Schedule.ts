@@ -24,7 +24,7 @@ export class Schedule implements ISchedule {
 
   constructor(user?: User | null) {
     this.finished = false;
-    this.price = 0;
+    this.price = 0.00;
     if (user) {
       this.userId = user.id;
     }
