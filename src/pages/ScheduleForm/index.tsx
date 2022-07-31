@@ -8,6 +8,7 @@ import CustomerModal from '../../components/CustomerModal';
 import { CustomerSelect } from '../../components/CustomerSelect';
 import DialogDelete from '../../components/DialogDelete';
 import InputCurrency from '../../components/Fields/InputCurrency';
+import InputDate from '../../components/Fields/InputDate';
 import { InputText } from '../../components/Fields/InputText';
 import InputTextArea from '../../components/Fields/InputTextArea';
 import Select from '../../components/Select';
@@ -105,12 +106,12 @@ const ScheduleForm: React.FC = () => {
               onChange={handleChange}
             />
             <DateWrapper>
-              <InputText
+              <InputDate
                 name="appointment"
-                value={formatDate(schedule.appointment)}
+                value={schedule.appointment}
                 idLabel="label.date"
                 disabled={!allowEdit}
-                onChange={handleChange}
+                onChange={(newDate) => setSchudule({...schedule, appointment: newDate})}
               />
               <InputText
                 name="appointment"
