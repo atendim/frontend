@@ -20,7 +20,7 @@ const InputDate: React.FC<InputDate> = ({ idLabel, selected, dateFormat = "P", .
         <Label>{formatMessage({ id: idLabel })}</Label>
       }
       <DatePickerStyled
-        selected={new Date(selected)}
+        selected={selected && new Date(selected)}
         minDate={new Date()}
         locale={"ptBR"}
         dateFormat={dateFormat}
