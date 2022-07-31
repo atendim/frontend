@@ -1,20 +1,18 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React from 'react';
+import { ReactDatePickerProps, registerLocale } from 'react-datepicker';
 import { useIntl } from 'react-intl';
-import { Flex } from '../../base/Utils';
-import { InputText, TextFieldProps } from '../InputText';
-import { registerLocale } from 'react-datepicker';
 import { Container, DatePickerStyled, Label } from './styles';
 
-type InputDate = Omit<TextFieldProps, "onChange"> & {
+import { ptBR } from 'date-fns/locale';
+registerLocale('ptBR', ptBR)
+
+type InputDate = ReactDatePickerProps & {
   onChange: (newDate: Date) => void;
+  idLabel: string;
 }
 
-const InputDate: React.FC<InputDate> = ({ idLabel, name, value, onChange, disabled }) => {
+const InputDate: React.FC<InputDate> = ({ idLabel, dateFormat = "P", ...props }) => {
   const { formatMessage } = useIntl();
-
-  const handleChange = useCallback((newDate) => {
-    onChange(newDate);
-  }, []);
 
   return (
     <Container>
@@ -22,13 +20,10 @@ const InputDate: React.FC<InputDate> = ({ idLabel, name, value, onChange, disabl
         <Label>{formatMessage({ id: idLabel })}</Label>
       }
       <DatePickerStyled
-        selected={value}
-        name={name}
         minDate={new Date()}
-        onChange={handleChange}
         locale={"ptBR"}
-        dateFormat="P"
-        disabled={disabled}
+        dateFormat={dateFormat}
+        {...props}
       />
     </Container>
   )
