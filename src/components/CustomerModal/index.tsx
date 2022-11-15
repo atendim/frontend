@@ -27,15 +27,13 @@ type CustomerModalType = {
 const CustomerModal: React.FC<CustomerModalType> = ({ getSelectedCustomer, updateCustomer, open, onOpenChange, customerId }) => {
   const { formatMessage, locale } = useIntl();
   const [invalidFields, setInvalidFields] = useState({email: false, phone: false, name: false})
-  const [customer, setCustomer] = useState<Customer>();
+  const [customer, setCustomer] = useState<Customer>(new Customer());
   const asYouType = new AsYouType(locale as any)
 
   useEffect(() => {
     const selectedCostumer = getSelectedCustomer();
 
-    if (!selectedCostumer) {
-      setCustomer(new Customer())
-    } else {
+    if (selectedCostumer) {
       setCustomer(selectedCostumer)
     }
   }, [customerId, getSelectedCustomer])
@@ -48,10 +46,10 @@ const CustomerModal: React.FC<CustomerModalType> = ({ getSelectedCustomer, updat
         value = asYouType.input(value)
       }
 
-      setCustomer({
-        ...customer,
+      setCustomer(prev => ({
+        ...prev,
         [name]: value
-      })
+      }))
 
       setInvalidFields({...invalidFields, [name]: false})
     }

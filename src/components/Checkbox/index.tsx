@@ -18,6 +18,7 @@ const Checkbox: React.FC<CheckboxType> = ({ checked, onCheck, idLabel, disabled 
         checked={checked} 
         onCheckedChange={onCheck}
         disabled={disabled}
+        onKeyDown={e => (e.key === "Enter") && onCheck(!checked)}
       >
         <CheckboxIndicator>
           <CheckIcon />

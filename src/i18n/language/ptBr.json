@@ -37,7 +37,9 @@
     "successfullyRegistered": "Cadastro realizado com sucesso!",
     "noAppointmentFound": "Nenhum atendimento encontrado!",
     "deleteDialogTitle": "Deseja deletar este registro?",
-    "deleteDialogContent": "Essa ação não poderá ser desfeita. Isto irá deletar permanentemente este registro."
+    "deleteDialogContent": "Essa ação não poderá ser desfeita. Isto irá deletar permanentemente este registro.",
+    "successfullySaved": "Registrado salvo com sucesso!",
+    "errorSavingRegister":"Registrado salvo com sucesso!"
   },
   "errors": {
     "wrongEmailPassword": "Email ou senha incorretos",

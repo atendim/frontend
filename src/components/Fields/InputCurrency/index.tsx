@@ -17,7 +17,7 @@ const InputCurrency: React.FC<InputCurrencyType> = (
   { name, value, disabled, handleChange, children, ...props }
 ) => {
   const { formatMessage } = useIntl();
-  const strValue = useRef<string>(value?.toString() || "0")
+  const strValue = useRef<string>(value ? Number(value).toFixed(2) : "0,00")
 
   const handleArrowKeys = useCallback((e?: React.KeyboardEvent<HTMLInputElement>) => {
     if (e && ["ArrowUp", "ArrowDown"].includes(e.key)) {
@@ -59,6 +59,8 @@ const InputCurrency: React.FC<InputCurrencyType> = (
         onValueChange={onChangeValue}
         onKeyDown={handleArrowKeys}
         allowNegativeValue={false}
+        fixedDecimalLength={2}
+
       />
       {children}
     </Container>

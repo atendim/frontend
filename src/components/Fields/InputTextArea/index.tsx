@@ -5,7 +5,7 @@ import { TextFieldProps } from '../InputText';
 import { Container, Label, InputArea } from './style';
 
 const InputTextArea: React.FC<TextFieldProps> = (
-  { idLabel, value, onChange, name, children, idPlaceholder, size, invalid, disabled }
+  { idLabel, value = "", onChange, name, children, idPlaceholder, size, invalid, disabled }
 ) => {
   const { formatMessage } = useIntl();
 

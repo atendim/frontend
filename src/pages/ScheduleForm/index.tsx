@@ -1,85 +1,99 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import CurrencyInput from 'react-currency-input-field';
-import { useIntl } from 'react-intl';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { Flex } from '../../components/base/Utils';
-import Checkbox from '../../components/Checkbox';
-import CustomerModal from '../../components/CustomerModal';
-import { CustomerSelect } from '../../components/CustomerSelect';
-import DialogDelete from '../../components/DialogDelete';
-import InputCurrency from '../../components/Fields/InputCurrency';
-import InputDate from '../../components/Fields/InputDate';
-import { InputText } from '../../components/Fields/InputText';
-import InputTextArea from '../../components/Fields/InputTextArea';
-import InputTime from '../../components/Fields/InputTime';
-import Select from '../../components/Select';
-import { ToolBarForm } from '../../components/ToolBarForm';
-import { useAuth } from '../../contexts/auth';
-import { useToast } from '../../contexts/toast';
-import { Customer } from '../../models/Customer';
-import { Schedule } from '../../models/Schedule';
-import { getCustomers } from '../../services/CustomerService';
-import { deleteSchedule, getSchedule, saveOrUpdateSchedule } from '../../services/ScheduleService';
+import React, { useCallback, useEffect, useState } from "react";
+import { useIntl } from "react-intl";
+import { useNavigate, useParams } from "react-router-dom";
+import { Flex } from "../../components/base/Utils";
+import Checkbox from "../../components/Checkbox";
+import { CustomerSelect } from "../../components/CustomerSelect";
+import DialogDelete from "../../components/DialogDelete";
+import InputCurrency from "../../components/Fields/InputCurrency";
+import InputDate from "../../components/Fields/InputDate";
+import { InputText } from "../../components/Fields/InputText";
+import InputTextArea from "../../components/Fields/InputTextArea";
+import InputTime from "../../components/Fields/InputTime";
+import { ToolBarForm } from "../../components/ToolBarForm";
+import { useToast } from "../../contexts/toast";
+import { Schedule } from "../../models/Schedule";
+import {
+  deleteSchedule,
+  getSchedule,
+  saveOrUpdateSchedule
+} from "../../services/ScheduleService";
 
-import { Container, DateWrapper, StatusWrapper } from './styles';
+import { Container, DateWrapper } from "./styles";
 
 const ScheduleForm: React.FC = () => {
-  const { formatDate, formatTime, formatNumber,  } = useIntl();
+  const { formatMessage } = useIntl();
   const { showError, showSuccess } = useToast();
   const navigate = useNavigate();
   const { idSchedule } = useParams();
   const [schedule, setSchudule] = useState<Schedule>(new Schedule());
   const [allowEdit, setAllowEdit] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
+  const [invalidDesc, setInvalidDesc] = useState(false);
 
   useEffect(() => {
     if (idSchedule) {
       (async () => {
         try {
-          const response = await getSchedule(idSchedule)
+          const response = await getSchedule(idSchedule);
           setSchudule(response.data);
         } catch (error: any) {
-          showError(error.message)
+          showError(error.message);
         }
-      })()
+      })();
     } else {
-      setAllowEdit(true)
+      setAllowEdit(true);
     }
-  }, [])
+  }, []);
 
-  const handleSave = async () => {
-    if (schedule) {
+  const handleSave = async (e?: any) => {
+    e?.preventDefault();
+    
+    if (schedule.description) {
       try {
         const response = await saveOrUpdateSchedule(schedule);
         if (response.status === 200) {
-          showSuccess('Registrado salvo com sucesso!');
-          navigate('/', { replace: true })
+          showSuccess(formatMessage({id: "messages.successfullySaved"}));
+          navigate("/", { replace: true });
         }
       } catch (error: any) {
-        showError(error.data?.message || "Erro ao salver registro")
+        showError(error.data?.message || formatMessage({id: "messages.errorSavingRegister"}));
       }
+    } else {
+      setInvalidDesc(true)
     }
-  }
+  };
 
   const handleDelete = async () => {
     if (schedule?.id) {
       const response = await deleteSchedule(schedule.id);
 
       if (response.status === 200) {
-        showSuccess('Registrado deletado com sucesso!');
-        navigate('/', { replace: true })
+        showSuccess("Registrado deletado com sucesso!");
+        navigate("/", { replace: true });
       }
     }
-  }
+  };
 
-  const handleChange = useCallback((event: any) => {
-    if (schedule) {
-      setSchudule(prev => ({
-        ...prev,
-        [event.target.name]: event.target.value
-      }))
-    }
-  }, [schedule])
+  const handleChange = useCallback(
+    (event: any) => {
+      if (schedule) {
+        setSchudule((prev) => ({
+          ...prev,
+          [event.target.name]: event.target.value,
+        }));
+      }
+      if (invalidDesc) setInvalidDesc(false)
+    },
+    [schedule]
+  );
+
+  const onChange = (field: keyof Schedule, value: any) => {
+    setSchudule((prev) => ({
+      ...prev,
+      [field]: value,
+    }));
+  };
 
   return (
     <>
@@ -91,11 +105,11 @@ const ScheduleForm: React.FC = () => {
           onSave={handleSave}
           onDelete={() => setShowDialog(true)}
         />
-        {schedule &&
+        {schedule && (
           <>
             <CustomerSelect
-              name='customer'
-              onChange={(value) => setSchudule(prev => ({ ...prev, customerId: value }))}
+              name="customer"
+              onChange={(value) => onChange("customerId", value)}
               value={schedule.customerId}
               disabled={!allowEdit}
             />
@@ -105,6 +119,7 @@ const ScheduleForm: React.FC = () => {
               idLabel="label.description"
               disabled={!allowEdit}
               onChange={handleChange}
+              invalid={invalidDesc}
             />
             <DateWrapper>
               <InputDate
@@ -112,17 +127,14 @@ const ScheduleForm: React.FC = () => {
                 selected={schedule.appointment}
                 idLabel="label.date"
                 disabled={!allowEdit}
-                onChange={(newDate: Date) => {
-                  console.log(newDate);
-                  setSchudule({...schedule, appointment: newDate})
-                }}
+                onChange={(newDate: Date) => onChange("appointment", newDate)}
               />
               <InputTime
                 name="appointment"
                 selected={schedule.appointment}
                 idLabel="label.time"
                 disabled={!allowEdit}
-                onChange={(newDate: Date) => setSchudule(prev => ({...prev, appointment: newDate}))}
+                onChange={(newDate: Date) => onChange("appointment", newDate)}
               />
             </DateWrapper>
             <InputCurrency
@@ -130,12 +142,12 @@ const ScheduleForm: React.FC = () => {
               value={schedule.price}
               idLabel="label.price"
               disabled={!allowEdit}
-              handleChange={(value) => setSchudule(prev => ({...prev, price: value}))}
+              handleChange={(value) => onChange("price", value)}
             />
             <Checkbox
-              idLabel='label.finishedAppointment'
+              idLabel="label.finishedAppointment"
               checked={schedule.finished}
-              onCheck={(checked) => setSchudule(prev => ({ ...prev, finished: checked }))}
+              onCheck={(checked) => onChange("finished", checked)}
               disabled={!allowEdit}
             />
             <InputTextArea
@@ -147,11 +159,15 @@ const ScheduleForm: React.FC = () => {
             />
             <Flex />
           </>
-        }
+        )}
       </Container>
-      <DialogDelete open={showDialog} onHide={() => setShowDialog(false)} onDelete={handleDelete} />
+      <DialogDelete
+        open={showDialog}
+        onHide={() => setShowDialog(false)}
+        onDelete={handleDelete}
+      />
     </>
   );
-}
+};
 
 export default ScheduleForm;

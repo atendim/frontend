@@ -13,10 +13,8 @@ type InputDate = ReactDatePickerProps & {
 
 const InputDate: React.FC<InputDate> = ({ idLabel, selected, onChange, dateFormat = "P", ...props }) => {
   const { formatMessage } = useIntl();
-  console.log("QUEM")
 
   const handleChange = useCallback((newDate: Date) => {
-    console.log("QUEM")
     onChange(newDate)
   }, [selected])
 
