@@ -46,9 +46,7 @@ const ScheduleForm: React.FC = () => {
     }
   }, []);
 
-  const handleSave = async (e?: any) => {
-    e?.preventDefault();
-    
+  const handleSave = async () => {
     if (schedule.description) {
       try {
         const response = await saveOrUpdateSchedule(schedule);
