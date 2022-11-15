@@ -23,7 +23,7 @@ const Checkbox: React.FC<CheckboxType> = ({ checked, onCheck, idLabel, disabled 
           <CheckIcon />
         </CheckboxIndicator>
       </CheckboxControll>
-      <Label htmlFor="c1">
+      <Label htmlFor="c1" noMargin>
         <FormattedMessage id={idLabel} defaultMessage='label' />
       </Label>
     </Container>

@@ -10,7 +10,21 @@ export const ContainerBase = css({
 
 export const LabelBase = css({
   fontSize: '$sm',
-  marginBottom: '$2'
+
+  variants: {
+    noMargin: {
+      true: {
+        margin: 'none'
+      }, 
+      false: {
+        marginBottom: '$2',
+      }
+    }
+  },
+
+  defaultVariants: {
+    noMargin: false
+  }
 });
 
 export const FieldBase = css({

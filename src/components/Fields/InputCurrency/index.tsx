@@ -1,6 +1,6 @@
 import { CSS } from '@stitches/react';
 import React, { useCallback, useRef } from 'react';
-import CurrencyInput, { CurrencyInputProps, formatValue } from 'react-currency-input-field';
+import { CurrencyInputProps, formatValue } from 'react-currency-input-field';
 import { useIntl } from 'react-intl';
 import { Container, CurrencyInputStyled, Label } from './styles';
 
@@ -17,8 +17,7 @@ const InputCurrency: React.FC<InputCurrencyType> = (
   { name, value, disabled, handleChange, children, ...props }
 ) => {
   const { formatMessage } = useIntl();
-  const strValue = useRef<string>(value?.toString() || "0.50")
-  console.log(strValue, value)
+  const strValue = useRef<string>(value?.toString() || "0")
 
   const handleArrowKeys = useCallback((e?: React.KeyboardEvent<HTMLInputElement>) => {
     if (e && ["ArrowUp", "ArrowDown"].includes(e.key)) {
@@ -27,9 +26,11 @@ const InputCurrency: React.FC<InputCurrencyType> = (
       strValue.current = formatValue({
         value: (e.key === "ArrowDown" ? numValue - 1 : numValue + 1).toString(),
         groupSeparator: '.',
-        decimalSeparator: ","
+        decimalSeparator: ",",
+        decimalScale: 2
       })
 
+      console.log(strValue.current)
       handleChange(refineNumber(strValue.current))
     }
   }, [value, strValue.current]);
@@ -58,7 +59,6 @@ const InputCurrency: React.FC<InputCurrencyType> = (
         onValueChange={onChangeValue}
         onKeyDown={handleArrowKeys}
         allowNegativeValue={false}
-        fixedDecimalLength={2}
       />
       {children}
     </Container>

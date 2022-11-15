@@ -9,9 +9,7 @@ export const Container = styled('div', {
   marginBottom: '$4'
 })
 
-export const Label = styled('label', LabelBase, {
-  margin: 0,
-});
+export const Label = styled('label', LabelBase);
 
 const StyledCheckbox = styled(CheckboxPrimitive.Root, {
   all: 'unset',

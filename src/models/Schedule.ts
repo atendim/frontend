@@ -8,7 +8,7 @@ export interface ISchedule {
   price?: number;
   appointment: Date;
   finished: boolean;
-  userId: string,
+  userId?: string,
   customerId: string
 }
 
@@ -19,15 +19,12 @@ export class Schedule implements ISchedule {
   price?: number | undefined;
   appointment: Date;
   finished: boolean;
-  userId: string;
+  userId?: string;
   customerId: string;
 
-  constructor(user?: User | null) {
+  constructor() {
     this.finished = false;
     this.price = 0.00;
-    if (user) {
-      this.userId = user.id;
-    }
     this.appointment = new Date();
   }
 }

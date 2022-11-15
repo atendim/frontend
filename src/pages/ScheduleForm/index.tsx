@@ -24,12 +24,11 @@ import { deleteSchedule, getSchedule, saveOrUpdateSchedule } from '../../service
 import { Container, DateWrapper, StatusWrapper } from './styles';
 
 const ScheduleForm: React.FC = () => {
-  const { user } = useAuth();
   const { formatDate, formatTime, formatNumber,  } = useIntl();
   const { showError, showSuccess } = useToast();
   const navigate = useNavigate();
   const { idSchedule } = useParams();
-  const [schedule, setSchudule] = useState<Schedule>();
+  const [schedule, setSchudule] = useState<Schedule>(new Schedule());
   const [allowEdit, setAllowEdit] = useState(false);
   const [showDialog, setShowDialog] = useState(false);
 
@@ -38,25 +37,26 @@ const ScheduleForm: React.FC = () => {
       (async () => {
         try {
           const response = await getSchedule(idSchedule)
-          console.log(response.data.customerId)
           setSchudule(response.data);
         } catch (error: any) {
           showError(error.message)
         }
       })()
-    } else if (!schedule) {
-      setSchudule(new Schedule(user))
+    } else {
       setAllowEdit(true)
     }
-
   }, [])
 
   const handleSave = async () => {
     if (schedule) {
-      const response = await saveOrUpdateSchedule(schedule);
-      if (response.status === 200) {
-        showSuccess('Registrado salvo com sucesso!');
-        navigate('/', { replace: true })
+      try {
+        const response = await saveOrUpdateSchedule(schedule);
+        if (response.status === 200) {
+          showSuccess('Registrado salvo com sucesso!');
+          navigate('/', { replace: true })
+        }
+      } catch (error: any) {
+        showError(error.data?.message || "Erro ao salver registro")
       }
     }
   }
@@ -74,13 +74,13 @@ const ScheduleForm: React.FC = () => {
 
   const handleChange = useCallback((event: any) => {
     if (schedule) {
-      setSchudule({
-        ...schedule,
+      setSchudule(prev => ({
+        ...prev,
         [event.target.name]: event.target.value
-      })
+      }))
     }
   }, [schedule])
-  
+
   return (
     <>
       <Container>
@@ -95,7 +95,7 @@ const ScheduleForm: React.FC = () => {
           <>
             <CustomerSelect
               name='customer'
-              onChange={(value) => setSchudule({ ...schedule, customerId: value })}
+              onChange={(value) => setSchudule(prev => ({ ...prev, customerId: value }))}
               value={schedule.customerId}
               disabled={!allowEdit}
             />
@@ -112,14 +112,17 @@ const ScheduleForm: React.FC = () => {
                 selected={schedule.appointment}
                 idLabel="label.date"
                 disabled={!allowEdit}
-                onChange={(newDate: Date) => setSchudule({...schedule, appointment: newDate})}
+                onChange={(newDate: Date) => {
+                  console.log(newDate);
+                  setSchudule({...schedule, appointment: newDate})
+                }}
               />
               <InputTime
                 name="appointment"
                 selected={schedule.appointment}
                 idLabel="label.time"
                 disabled={!allowEdit}
-                onChange={(newDate: Date) => setSchudule({...schedule, appointment: newDate})}
+                onChange={(newDate: Date) => setSchudule(prev => ({...prev, appointment: newDate}))}
               />
             </DateWrapper>
             <InputCurrency
@@ -127,12 +130,12 @@ const ScheduleForm: React.FC = () => {
               value={schedule.price}
               idLabel="label.price"
               disabled={!allowEdit}
-              handleChange={(value) => setSchudule({...schedule, price: value})}
+              handleChange={(value) => setSchudule(prev => ({...prev, price: value}))}
             />
             <Checkbox
               idLabel='label.finishedAppointment'
               checked={schedule.finished}
-              onCheck={(checked) => setSchudule({ ...schedule, finished: checked })}
+              onCheck={(checked) => setSchudule(prev => ({ ...prev, finished: checked }))}
               disabled={!allowEdit}
             />
             <InputTextArea
