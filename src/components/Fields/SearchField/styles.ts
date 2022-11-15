@@ -1,7 +1,8 @@
 import { styled } from "../../../theme/stitches.config";
 
 export const Container = styled('div', {
-  display: 'flex',
+  display: 'none',
+  //display: 'flex',
   alignItems: 'center',
   background: '$gray3',
   borderRadius: '$full',
