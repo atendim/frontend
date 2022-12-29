@@ -20,6 +20,7 @@ import {
 } from "../../services/ScheduleService";
 
 import { Container, DateWrapper } from "./styles";
+import ErrorBoundary from "../../components/ErrorBoundary";
 
 const ScheduleForm: React.FC = () => {
   const { formatMessage } = useIntl();
@@ -67,7 +68,7 @@ const ScheduleForm: React.FC = () => {
       const response = await deleteSchedule(schedule.id);
 
       if (response.status === 200) {
-        showSuccess("Registrado deletado com sucesso!");
+        showSuccess(formatMessage({ id: "mesmessages.successfullyDeleted" }));
         navigate("/", { replace: true });
       }
     }
@@ -168,4 +169,12 @@ const ScheduleForm: React.FC = () => {
   );
 };
 
-export default ScheduleForm;
+const ScheduleFormErrorBoundary = () => {
+  return (
+    <ErrorBoundary>
+      <ScheduleForm />
+    </ErrorBoundary>
+  )
+}
+
+export default ScheduleFormErrorBoundary;

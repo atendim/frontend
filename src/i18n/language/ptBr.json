@@ -35,11 +35,14 @@
     "signUp": "Não possui uma conta? Registre-se.",
     "signIn": "Possui uma conta? Entre.",
     "successfullyRegistered": "Cadastro realizado com sucesso!",
+    "successfullyDeleted": "Registrado deletado com sucesso!",
     "noAppointmentFound": "Nenhum atendimento encontrado!",
     "deleteDialogTitle": "Deseja deletar este registro?",
     "deleteDialogContent": "Essa ação não poderá ser desfeita. Isto irá deletar permanentemente este registro.",
     "successfullySaved": "Registrado salvo com sucesso!",
-    "errorSavingRegister":"Registrado salvo com sucesso!"
+    "errorSavingRegister":"Erro ao salvar registro!",
+    "somethingWentWrong": "Algo deu errado :(",
+    "clickHereGoBackHomePage": "Clique aqui para retornar a página inicial"
   },
   "errors": {
     "wrongEmailPassword": "Email ou senha incorretos",
