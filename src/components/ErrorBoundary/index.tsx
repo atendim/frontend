@@ -3,9 +3,11 @@ import { IntlContext } from "react-intl";
 import { Flex } from "../base/Utils";
 import { Link } from "react-router-dom";
 
-class ErrorBoundary extends Component {
+class ErrorBoundary extends Component<React.PropsWithChildren> {
   state = { hasError: false };
+  
   static contextType = IntlContext;
+  declare context: React.ContextType<typeof IntlContext>
 
   static getDerivedStateFromError() {
     return { hasError: true };
