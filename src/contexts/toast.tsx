@@ -15,7 +15,7 @@ export const useToast = () => {
   return useContext(ToastContext);
 }
 
-export const ToastProvider: React.FC = ({ children }) => {
+export const ToastProvider: React.FC<React.PropsWithChildren> = ({ children }) => {
   const [open, setOpen] = useState(false);
   const [level, setLevel] = useState<"primary" | "success" | "error" | "warning">();
   const [values, setValues] = useState<{ title: string, message?: string }>({
