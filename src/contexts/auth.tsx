@@ -23,7 +23,7 @@ export const useAuth = () => {
   return useContext(AuthContext);
 }
 
-export const AuthProvider: React.FC = ({ children }) => {
+export const AuthProvider: React.FC<React.PropsWithChildren<{ userMock?: User }>> = ({ children, userMock }) => {
   const [user, setUser] = useState<User | null>(null);
   const navigate = useNavigate();
   const { showError, showSuccess } = useToast();
@@ -35,6 +35,10 @@ export const AuthProvider: React.FC = ({ children }) => {
 
     if (user && token) {
       setUser(JSON.parse(user))
+    }
+    
+    if (userMock) {
+      setUser(userMock)
     }
   }, [])
 
