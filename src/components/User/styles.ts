@@ -17,11 +17,9 @@ export const Container = styled('div', {
   }  
 });
 
-export const UserImage =  styled('div', {
+export const UserImage =  styled('img', {
   width: '27px',
   height: '27px',
-  background: 'url("https://github.com/ItaloMedici.png")',
-  backgroundSize: 'cover',
   borderRadius: '50%',
   marginRight: '20px',
 });
