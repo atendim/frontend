@@ -9,7 +9,7 @@ import { useToast } from './toast';
 
 // import { Container } from './styles';
 
-type AuthContextData = {
+export type AuthContextData = {
   signed: boolean,
   user: User | null,
   signIn: (userData: User) => Promise<void>,
@@ -53,7 +53,7 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{ userMock?: User }>
         navigate('/home', { replace: true });
       })
       .catch(err => {
-        let {messageCode} = err?.response?.data;
+        let messageCode = err?.response?.data?.messageCode;
         showError(formatMessage({id: `errors.${messageCode}`}))
       });
   }
