@@ -19,7 +19,7 @@ describe("User Tests", () => {
   })
 
   test("Displays user name", async () => {
-    const { user: { name }, findByText } = setup();
+    const { userMock: { name }, findByText } = setup();
 
     const userName = await findByText(name)
     expect(userName).toBeDefined()
