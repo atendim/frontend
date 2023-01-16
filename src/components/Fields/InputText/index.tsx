@@ -1,27 +1,39 @@
-import { CSS } from '@stitches/react';
-import { useIntl } from 'react-intl';
-import { Input, Container, Label } from './styles';
+import { CSS } from "@stitches/react";
+import { useIntl } from "react-intl";
+import { Input, Container, Label } from "./styles";
 
 export type TextFieldProps = React.ComponentPropsWithRef<typeof Input> & {
   idLabel?: string;
-  value: any,
-  name: string,
-  onChange?: (e: any) => void,
+  value: any;
+  name: string;
+  onChange?: (e: any) => void;
   idPlaceholder?: string;
-  disabled?: boolean,
-  cssContainer?: CSS
-}
+  disabled?: boolean;
+  cssContainer?: CSS;
+};
 
-
-const InputText: React.FC<TextFieldProps> = (
-  { idLabel, value, onChange, name, children, idPlaceholder, size, type = "text", invalid, disabled, cssContainer, ...rest }
-) => {
+const InputText: React.FC<TextFieldProps> = ({
+  idLabel,
+  value,
+  onChange,
+  name,
+  children,
+  idPlaceholder,
+  size,
+  type = "text",
+  invalid,
+  disabled,
+  cssContainer,
+  ...rest
+}) => {
   const { formatMessage } = useIntl();
   return (
     <Container css={cssContainer}>
-      {idLabel &&
-        <Label>{formatMessage({ id: idLabel })}</Label>
-      }
+      {idLabel && (
+        <Label htmlFor={name}>
+          {formatMessage({ id: idLabel })}
+        </Label>
+      )}
       <Input
         size={size}
         type={type}
@@ -31,11 +43,13 @@ const InputText: React.FC<TextFieldProps> = (
         placeholder={idPlaceholder && formatMessage({ id: idPlaceholder })}
         invalid={invalid}
         disabled={disabled}
+        aria-invalid={!!disabled}
+        aria-label={formatMessage({ id: idLabel })}
         {...rest}
       />
       {children}
     </Container>
   );
-}
+};
 
 export { InputText };
