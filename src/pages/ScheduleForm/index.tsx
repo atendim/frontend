@@ -111,6 +111,7 @@ const ScheduleForm: React.FC = () => {
               onChange={(value) => onChange("customerId", value)}
               value={schedule.customerId}
               disabled={!allowEdit}
+              data-testid="customer"
             />
             <InputText
               name="description"

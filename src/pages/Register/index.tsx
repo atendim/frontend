@@ -18,6 +18,7 @@ const handleRegister: React.FC = () => {
   const {formatMessage} = useIntl();
 
   const [values, setValues] = useState<User>({
+    id: "",
     email: "",
     name: "",
     password: "",

@@ -6,6 +6,7 @@ import { useAuth } from '../../contexts/auth';
 import { useToast } from '../../contexts/toast';
 import { ScheduleFeed } from '../../models/Feed';
 import { buildFeed } from '../../services/ScheduleService';
+import Accordion from '../Accordion';
 import { Button } from '../Button';
 import { ScheduleCard } from '../ScheduleCard';
 
@@ -47,6 +48,7 @@ const Feed: React.FC = () => {
 
   return !isLoading ? (
     <>
+
       {feed?.overdue || feed?.avaliable ?
         <>
           {feed?.overdue && feed?.overdue.map((overdue, i) => (

@@ -1,13 +1,9 @@
-import axios from 'axios';
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
 import { useNavigate } from 'react-router-dom';
-import { ErrorResponse } from '../models/ErrorResponse';
 import { User } from '../models/User';
 import { authenticate, register } from '../services/AuthService';
 import { useToast } from './toast';
-
-// import { Container } from './styles';
 
 export type AuthContextData = {
   signed: boolean,

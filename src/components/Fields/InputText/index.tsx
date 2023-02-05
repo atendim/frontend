@@ -27,11 +27,12 @@ const InputText: React.FC<TextFieldProps> = ({
   ...rest
 }) => {
   const { formatMessage } = useIntl();
+
   return (
     <Container css={cssContainer}>
       {idLabel && (
         <Label htmlFor={name}>
-          {formatMessage({ id: idLabel })}
+          {formatMessage({ id: idLabel, defaultMessage: idLabel })}
         </Label>
       )}
       <Input
@@ -40,11 +41,11 @@ const InputText: React.FC<TextFieldProps> = ({
         onChange={onChange}
         value={value}
         name={name}
-        placeholder={idPlaceholder && formatMessage({ id: idPlaceholder })}
+        placeholder={idPlaceholder && formatMessage({ id: idPlaceholder, defaultMessage: idPlaceholder })}
         invalid={invalid}
         disabled={disabled}
         aria-invalid={!!disabled}
-        aria-label={formatMessage({ id: idLabel })}
+        aria-label={idLabel && formatMessage({ id: idLabel })}
         {...rest}
       />
       {children}
