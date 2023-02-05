@@ -1,12 +1,11 @@
 import React from 'react';
-import ButtonIcon from '../ButtonIcon';
+import { useIntl } from 'react-intl';
+import { ExitIcon } from '@radix-ui/react-icons';
 
 import { Container } from './styles';
 import User from '../User';
-import { ExitIcon } from '@radix-ui/react-icons';
 import { Button } from '../Button';
-import { useAuth } from '../../contexts/auth';
-import { useIntl } from 'react-intl';
+import { useAuth } from '../../hooks/useAuth';
 
 const Navbar: React.FC = () => {
   const { signOut} = useAuth();

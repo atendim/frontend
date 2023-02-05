@@ -1,20 +1,16 @@
-import * as Collapsible from '@radix-ui/react-collapsible';
-import { EyeClosedIcon } from '@radix-ui/react-icons';
 import React, { useEffect, useState } from 'react';
 import { useIntl } from 'react-intl';
-import { useAuth } from '../../contexts/auth';
+
 import { useToast } from '../../contexts/toast';
 import { ScheduleFeed } from '../../models/Feed';
 import { buildFeed } from '../../services/ScheduleService';
-import Accordion from '../Accordion';
-import { Button } from '../Button';
 import { ScheduleCard } from '../ScheduleCard';
-
 import { DateLegend, Schedules, FeedStyle, EmptyFeed, SkeletonFeed } from './styles';
+import { useAuth } from '../../hooks/useAuth';
 
 const Feed: React.FC = () => {
   const {signOut} = useAuth();
-  const { showWarn, showError } = useToast();
+  const { showError } = useToast();
   const { formatMessage, formatDate } = useIntl();
   const [feed, setFeed] = useState<ScheduleFeed>();
   const [isLoading, setLoading] = useState(false);

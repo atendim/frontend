@@ -4,6 +4,7 @@ import ToastProvider from "./contexts/toast";
 import { messages } from "./i18n";
 import Routes from "./routes";
 import GlobalStyle from "./styles/GlobalStyle";
+import { LoaderProvider } from "./contexts/loader";
 
 function App() {
   GlobalStyle();
@@ -11,12 +12,14 @@ function App() {
   return (
     <IntlProvider locale="pt-BR" defaultLocale="en" messages={messages}>
       <ToastProvider>
-        <AuthProvider>
-          <Routes />
-        </AuthProvider>
+        <LoaderProvider>
+          <AuthProvider>
+            <Routes />
+          </AuthProvider>
+        </LoaderProvider>
       </ToastProvider>
     </IntlProvider>
   );
 }
 
-export default App
+export default App;

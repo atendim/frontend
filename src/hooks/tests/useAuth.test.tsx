@@ -1,12 +1,9 @@
 import { afterAll, afterEach, beforeAll, describe, expect, test } from "vitest";
-import { AuthContextData, AuthProvider, useAuth } from "../auth";
 import { buildUserTest } from "../../__tests__/utils/buildUserTest";
-import { fireEvent, renderHook, waitFor } from "../../__tests__/utils/test-utils";
+import { renderHook, waitFor } from "../../__tests__/utils/test-utils";
 import { act } from "react-dom/test-utils";
-import { setupServer } from "msw/node";
-import { rest } from "msw";
 import { server } from "../../mocks/server";
-
+import { useAuth } from "../useAuth";
 
 describe("useAuth test", () => {
   const userMock = buildUserTest()

@@ -1,6 +1,6 @@
-import { useAuth } from '../contexts/auth';
 import { AppRoutes } from './app.routes';
 import { AuthRoutes } from './auth.routes';
+import { useAuth } from '../hooks/useAuth';
 
 const Routes = () => {
   const { signed } = useAuth();

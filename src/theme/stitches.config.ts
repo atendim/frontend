@@ -18,6 +18,7 @@ export const {
       primaryAA: 'hsla(13, 68%, 78%, .15)',
 
       background: '#FFF',
+      backgroundA: 'rgba(255,255,255, .6)',
 
       textColor: gray.gray12,
 
