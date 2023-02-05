@@ -11,8 +11,9 @@ import { AuthProvider } from "../../contexts/auth";
 import { buildUserTest } from "./buildUserTest";
 import { User } from "../../models/User";
 import { BrowserRouter } from "react-router-dom";
-import "happy-dom"
-import "@testing-library/jest-dom"
+import "happy-dom";
+import "@testing-library/jest-dom";
+import { LoaderProvider } from "../../contexts/loader";
 
 type renderOptions = Partial<{
   locale: string;
@@ -32,9 +33,11 @@ function buildWrapper(
   return (
     <BrowserRouter>
       <IntlProvider locale={locale} messages={messages}>
-        <ToastProvider>
-          <AuthProvider userMock={userMock}>{ui}</AuthProvider>
-        </ToastProvider>
+        <LoaderProvider>
+          <ToastProvider>
+            <AuthProvider userMock={userMock}>{ui}</AuthProvider>
+          </ToastProvider>
+        </LoaderProvider>
       </IntlProvider>
     </BrowserRouter>
   );
@@ -57,13 +60,13 @@ function render(
   };
 }
 
-function renderHook(
+function renderHook<Result = any>(
   hook: (props?: any) => any,
   { locale = "BR", route = "/", userProps }: renderOptions = {}
 ) {
   const userMock = buildUserTest(userProps);
 
-  return tRenderHook(hook, {
+  return tRenderHook<Result, any>(hook, {
     wrapper: ({ children }) => buildWrapper(children, locale, userMock, route),
   });
 }

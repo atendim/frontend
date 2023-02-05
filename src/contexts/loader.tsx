@@ -1,7 +1,7 @@
 import { createContext, useState } from "react";
 import { Loader } from "../components/Loader";
 
-type LoaderContextData = { isLoading: boolean; setLoading(is: boolean): void };
+export type LoaderContextData = { isLoading: boolean; setLoading(is: boolean): void };
 
 export const LoaderContext = createContext<LoaderContextData>(
   {} as LoaderContextData

@@ -21,10 +21,9 @@ export const AuthProvider: React.FC<React.PropsWithChildren<{ userMock?: User }>
   const navigate = useNavigate();
   const { showError, showSuccess } = useToast();
   const { formatMessage } = useIntl();
-  const { isLoading, setLoading } = useLoader()
+  const { setLoading } = useLoader()
 
   useEffect(() => {
-    console.log("isLoading")
     const user = localStorage.getItem("user");
     const token = localStorage.getItem("token");
 
