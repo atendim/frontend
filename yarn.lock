@@ -2635,10 +2635,10 @@ jsonc-parser@^3.2.0:
   resolved "https://registry.npmjs.org/jsonc-parser/-/jsonc-parser-3.2.0.tgz"
   integrity sha512-gfFQZrcTc8CnKXp6Y4/CBT3fTc0OVuDofpre4aEeEpSBPV5X5v4+Vmx+8snU7RLPrNHPKSgLxGo9YuQzz20o+w==
 
-libphonenumber-js@^1.10.14, libphonenumber-js@^1.10.9:
-  version "1.10.14"
-  resolved "https://registry.npmjs.org/libphonenumber-js/-/libphonenumber-js-1.10.14.tgz"
-  integrity sha512-McGS7GV/WjJ2KjfOGhJU1oJn29RYeo7Q+RpANRbUNMQ9gj5XArpbjurSuyYPTejFwbaUojstQ4XyWCrAzGOUXw==
+libphonenumber-js@^1.10.19:
+  version "1.10.19"
+  resolved "https://registry.yarnpkg.com/libphonenumber-js/-/libphonenumber-js-1.10.19.tgz#e18970c8d566fbfb1f88e688345f0512e126712e"
+  integrity sha512-MDZ1zLIkfSDZV5xBta3nuvbEOlsnKCPe4z5r3hyup/AXveevkl9A1eSWmLhd2FX4k7pJDe4MrLeQsux0HI/VWg==
 
 local-pkg@^0.4.2:
   version "0.4.2"
@@ -3016,15 +3016,15 @@ react-onclickoutside@^6.12.0:
   resolved "https://registry.npmjs.org/react-onclickoutside/-/react-onclickoutside-6.12.2.tgz"
   integrity sha512-NMXGa223OnsrGVp5dJHkuKxQ4czdLmXSp5jSV9OqiCky9LOpPATn3vLldc+q5fK3gKbEHvr7J1u0yhBh/xYkpA==
 
-react-phone-number-input@^3.2.5:
-  version "3.2.13"
-  resolved "https://registry.npmjs.org/react-phone-number-input/-/react-phone-number-input-3.2.13.tgz"
-  integrity sha512-2hvWIZCCbG5zQTcZOuwP++ixOlns4vosn7EXLJc8y9LSNCDBAJHufP/CrKp3YrCoGcyzokzmDbU8FmqfPRg8SA==
+react-phone-number-input@^3.2.18:
+  version "3.2.18"
+  resolved "https://registry.yarnpkg.com/react-phone-number-input/-/react-phone-number-input-3.2.18.tgz#3419673bd7465a7369e59289fb9eb0ae54bd778a"
+  integrity sha512-8vf2aFuZLTcix87fSswPmzj8t9ha2E8DEkkfydZjDOzAu5R6rAhNuWKwhpnFdDqp1Ak1JMnu1UsBQGQN0aRlzw==
   dependencies:
     classnames "^2.3.1"
     country-flag-icons "^1.5.4"
     input-format "^0.3.8"
-    libphonenumber-js "^1.10.14"
+    libphonenumber-js "^1.10.19"
     prop-types "^15.8.1"
 
 react-popper@^2.2.5:
