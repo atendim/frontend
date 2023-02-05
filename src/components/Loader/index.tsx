@@ -4,7 +4,7 @@ import Icon from "../../assets/icon.png"
 
 export const Loader = () => {
   return (
-    <Portal>
+    <Portal aria-label='loader'>
       <Modal>
         <Logo src={Icon} />
       </Modal>
