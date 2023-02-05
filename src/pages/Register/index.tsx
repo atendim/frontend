@@ -2,15 +2,14 @@ import { EnterIcon } from '@radix-ui/react-icons';
 import React, { useState } from 'react';
 import { useIntl } from 'react-intl';
 import { Link } from 'react-router-dom';
+
 import { Button } from '../../components/Button';
 import InputPassword from '../../components/Fields/InputPassword';
 import { InputText } from '../../components/Fields/InputText';
 import { CardForm } from '../../components/Form/CardForm';
-import { useAuth } from '../../contexts/auth';
-import { useToast } from '../../contexts/toast';
 import { User } from '../../models/User';
-import { register } from '../../services/AuthService';
 import { MainContainer } from '../../styles/MainContainer';
+import { useAuth } from '../../hooks/useAuth';
 
 const handleRegister: React.FC = () => {
   const [invalid, setInvalid] = useState(false);

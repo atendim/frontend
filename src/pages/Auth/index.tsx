@@ -1,15 +1,15 @@
-import { EnterIcon } from '@radix-ui/react-icons';
 import React, { useState } from 'react';
-import { useIntl } from 'react-intl';
 import { Link } from 'react-router-dom';
-import { Button } from '../../components/Button';
+import { useIntl } from 'react-intl';
+import { EnterIcon } from '@radix-ui/react-icons';
 
+import { Button } from '../../components/Button';
 import InputPassword from '../../components/Fields/InputPassword';
 import { InputText } from '../../components/Fields/InputText';
 import { CardForm } from '../../components/Form/CardForm';
-import { useAuth } from '../../contexts/auth';
 import { User } from "../../models/User";
 import { MainContainer } from '../../styles/MainContainer';
+import { useAuth } from '../../hooks/useAuth';
 
 const Auth: React.FC = () => {
   const [invalid, setInvalid] = useState(false);
