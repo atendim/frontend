@@ -1,15 +1,13 @@
 import { PlusIcon } from '@radix-ui/react-icons';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { useIntl } from 'react-intl';
+import { useNavigate } from 'react-router-dom';
 import { Button } from '../../components/Button';
+import Feed from '../../components/Feed';
 import SearchField from '../../components/Fields/SearchField';
 import Navbar from '../../components/Navbar';
-import { useIntl } from 'react-intl';
-import Feed from '../../components/Feed';
 import { useToast } from '../../contexts/toast';
-import { ScheduleFeed } from '../../models/Feed';
-import { buildFeed } from '../../services/ScheduleService';
 import { Header, Main, Wrapper } from './styles';
-import { useNavigate } from 'react-router-dom';
 
 const Home: React.FC = () => {
   const { formatMessage, formatDate } = useIntl();

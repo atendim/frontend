@@ -1,6 +1,6 @@
 import React from 'react';
 import { useAuth } from '../../contexts/auth';
-import defaultUserImage from "../../assets/defaultUserImage.jpg"
+import defaultUserImage from "../../../public/assets/defaultUserImage.jpg"
 import { Container, UserImage } from './styles';
 
 const User: React.FC = () => {
