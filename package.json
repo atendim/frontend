@@ -27,13 +27,12 @@
     "@types/react-router-dom": "^5.3.3",
     "axios": "^0.26.0",
     "date-fns": "^2.29.1",
-    "libphonenumber-js": "^1.10.9",
     "react": "^18.2.0",
     "react-currency-input-field": "^3.6.4",
     "react-datepicker": "^4.8.0",
     "react-dom": "^18.2.0",
     "react-intl": "^6.0.4",
-    "react-phone-number-input": "^3.2.5",
+    "react-phone-number-input": "^3.2.18",
     "react-router-dom": "^6.2.1"
   },
   "devDependencies": {

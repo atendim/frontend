@@ -1,59 +1,72 @@
-import { CheckIcon, Cross2Icon, EnvelopeClosedIcon, MobileIcon, PersonIcon } from '@radix-ui/react-icons';
-import React, { useEffect, useState } from 'react';
-import { useIntl } from 'react-intl';
-import { AsYouType, isValidPhoneNumber } from 'libphonenumber-js';
-import { useAuth } from '../../contexts/auth';
-import { Customer } from '../../models/Customer';
-import { Flex } from '../base/Utils';
-import { Button } from '../Button';
-import { InputText } from '../Fields/InputText';
+import React, { useEffect, useState } from "react";
+import {
+  CheckIcon,
+  Cross2Icon,
+  EnvelopeClosedIcon,
+  MobileIcon,
+  PersonIcon,
+} from "@radix-ui/react-icons";
+import { useIntl } from "react-intl";
+import { AsYouType, isValidPhoneNumber } from "libphonenumber-js";
+import { Customer } from "../../models/Customer";
+import { Flex } from "../base/Utils";
+import { Button } from "../Button";
+import { InputText } from "../Fields/InputText";
 import {
   ButtonDialogClose,
   Dialog,
   DialogClose,
-  DialogContent, DialogTitle
-} from './styles';
-import { isValidEmail } from '../../tools';
-import { saveCustomer } from '../../services/CustomerService';
+  DialogContent,
+  DialogTitle,
+} from "./styles";
+import { isValidEmail } from "../../tools";
+import { saveCustomer } from "../../services/CustomerService";
+import { InputPhone } from "../Fields/InputPhone";
 
 type CustomerModalType = {
   open: boolean;
   onOpenChange: () => void;
   getSelectedCustomer: () => Customer | undefined;
   customerId: string | undefined;
-  updateCustomer: (customerId: any) => void
-}
+  updateCustomer: (customerId: any) => void;
+};
 
-const CustomerModal: React.FC<CustomerModalType> = ({ getSelectedCustomer, updateCustomer, open, onOpenChange, customerId }) => {
+const CustomerModal: React.FC<CustomerModalType> = ({
+  getSelectedCustomer,
+  updateCustomer,
+  open,
+  onOpenChange,
+  customerId,
+}) => {
   const { formatMessage, locale } = useIntl();
-  const [invalidFields, setInvalidFields] = useState({email: false, phone: false, name: false})
+  const [invalidFields, setInvalidFields] = useState({
+    email: false,
+    phone: false,
+    name: false,
+  });
   const [customer, setCustomer] = useState<Customer>(new Customer());
-  const asYouType = new AsYouType(locale as any)
+  const asYouType = new AsYouType(locale as any);
 
   useEffect(() => {
     const selectedCostumer = getSelectedCustomer();
 
     if (selectedCostumer) {
-      setCustomer(selectedCostumer)
+      setCustomer(selectedCostumer);
     }
-  }, [customerId, getSelectedCustomer])
+  }, [customerId, getSelectedCustomer]);
 
   const handleChange = (event: any) => {
     if (customer) {
       let { name, value } = event.target;
 
-      if (name === 'phone') {
-        value = asYouType.input(value)
-      }
-
-      setCustomer(prev => ({
+      setCustomer((prev) => ({
         ...prev,
-        [name]: value
-      }))
+        [name]: value,
+      }));
 
-      setInvalidFields({...invalidFields, [name]: false})
+      setInvalidFields({ ...invalidFields, [name]: false });
     }
-  }
+  };
 
   const isValidField = () => {
     if (!customer) return false;
@@ -61,75 +74,88 @@ const CustomerModal: React.FC<CustomerModalType> = ({ getSelectedCustomer, updat
     let email = !isValidEmail(customer.email);
     let phone = !isValidPhoneNumber(customer.phone, locale as any);
     let name = !customer.name;
-    
-    setInvalidFields({email, phone, name})
+
+    setInvalidFields({ email, phone, name });
 
     return !email && !phone && !name;
-  }
+  };
 
   const handleSave = async () => {
     if (customer && isValidField()) {
       const response = await saveCustomer(customer);
-      
+
       if (response.status === 200) {
-        onOpenChange()
+        onOpenChange();
         updateCustomer(customer.id);
-      } 
+      }
     }
-  }
+  };
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent>
-        <DialogTitle>{formatMessage({ id: 'label.createNewCustomer' })}</DialogTitle>
+        <DialogTitle>
+          {formatMessage({ id: "label.createNewCustomer" })}
+        </DialogTitle>
 
-        <Flex css={{ gap: '$3', alignItems: 'center', marginBottom: '$4' }}>
+        <Flex css={{ gap: "$3", alignItems: "center", marginBottom: "$3" }}>
           <PersonIcon />
           <InputText
             invalid={invalidFields.name}
-            idPlaceholder='label.name'
-            name='name'
+            idPlaceholder="label.name"
+            name="name"
             value={customer?.name}
             onChange={handleChange}
             noMargin
             cssContainer={{ flex: 1 }}
           />
         </Flex>
-        <Flex css={{ gap: '$3', alignItems: 'center' }}>
-          <EnvelopeClosedIcon />
-          <InputText
-            invalid={invalidFields.email}
-            type='email'
-            idPlaceholder='label.email'
-            name='email'
-            value={customer?.email}
-            onChange={handleChange}
-            cssContainer={{ flex: 2, marginRight: '$1' }}
-            noMargin
-          />
-          <MobileIcon />
-          <InputText
-            invalid={invalidFields.phone}
-            type="tel"
-            idPlaceholder='label.phone'
-            name='phone'
-            value={customer?.phone}
-            onChange={handleChange}
-            cssContainer={{ flex: 1 }}
-            noMargin
-          />
+        <Flex
+          css={{
+            gap: "$3",
+            alignItems: "center",
+            "@bp3": { flexDirection: "column", alignItems: "flex-start" },
+          }}
+        >
+          <Flex css={{ gap: "$3", alignItems: "center", width: '100%' }}>
+            <EnvelopeClosedIcon />
+            <InputText
+              invalid={invalidFields.email}
+              type="email"
+              idPlaceholder="label.email"
+              name="email"
+              value={customer?.email}
+              onChange={handleChange}
+              cssContainer={{ flex: 1, marginRight: "$1" }}
+              noMargin
+            />
+          </Flex>
+          <Flex css={{ gap: "$3", alignItems: "center", width: '100%'  }}>
+            <MobileIcon />
+            <InputPhone
+              invalid={invalidFields.phone}
+              type="tel"
+              placeholder={formatMessage({ id: "label.phone" })}
+              defaultCountry='BR'
+              name="phone"
+              value={customer?.phone}
+              onChange={value => handleChange({ target: { name: "phone", value  } })}
+              cssContainer={{ flex: 1, marginRight: "$1" }}
+              noMargin
+            />
+          </Flex>
         </Flex>
-        <Flex css={{ marginTop: '$8', justifyContent: 'flex-end' }}>
+        <Flex css={{ marginTop: "$8", justifyContent: "flex-end" }}>
           <Button
             color="success"
-            idLabel='label.save'
+            idLabel="label.save"
             iconLeft
             onClick={handleSave}
           >
             <CheckIcon />
           </Button>
         </Flex>
-        <DialogClose asChild >
+        <DialogClose asChild>
           <ButtonDialogClose aria-label="Close">
             <Cross2Icon />
           </ButtonDialogClose>
@@ -137,6 +163,6 @@ const CustomerModal: React.FC<CustomerModalType> = ({ getSelectedCustomer, updat
       </DialogContent>
     </Dialog>
   );
-}
+};
 
 export default CustomerModal;
