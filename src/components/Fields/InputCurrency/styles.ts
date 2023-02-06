@@ -6,4 +6,4 @@ export const Container = styled('div', ContainerBase)
 
 export const Label = styled('label', LabelBase)
 
-export const CurrencyInputStyled = styled(CurrencyInput, FieldBase)
+export const Input = styled('input', FieldBase)

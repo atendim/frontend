@@ -1,9 +1,12 @@
-import { CSS } from '@stitches/react';
-import React, { useCallback, useRef } from 'react';
-import { CurrencyInputProps, formatValue } from 'react-currency-input-field';
-import { useIntl } from 'react-intl';
-import { Container, CurrencyInputStyled, Label } from './styles';
-
+import { CSS } from "@stitches/react";
+import React, { useCallback, useRef, useState } from "react";
+import { CurrencyInputProps, formatValue } from "react-currency-input-field";
+import { useIntl } from "react-intl";
+import { Container, Input, Label } from "./styles";
+import {
+  formatStringValueToNumber,
+  formatValueToCurrency,
+} from "../../base/Utils";
 
 type InputCurrencyType = React.PropsWithoutRef<CurrencyInputProps> & {
   idLabel?: string;
@@ -11,60 +14,61 @@ type InputCurrencyType = React.PropsWithoutRef<CurrencyInputProps> & {
   handleChange: (value: number) => void;
   name: string;
   value?: number;
-}
+};
 
-const InputCurrency: React.FC<InputCurrencyType> = (
-  { name, value, disabled, handleChange, children, ...props }
-) => {
+const InputCurrency: React.FC<InputCurrencyType> = ({
+  name,
+  value,
+  disabled,
+  handleChange,
+  children,
+  ...props
+}) => {
   const { formatMessage } = useIntl();
-  const strValue = useRef<string>(value ? Number(value).toFixed(2) : "0,00")
+  const [strValue, setStrValue] = useState(formatValueToCurrency(value));
 
-  const handleArrowKeys = useCallback((e?: React.KeyboardEvent<HTMLInputElement>) => {
+  const handleArrowKeys = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e && ["ArrowUp", "ArrowDown"].includes(e.key)) {
-      let numValue = refineNumber(strValue.current);
-
-      strValue.current = formatValue({
-        value: (e.key === "ArrowDown" ? numValue - 1 : numValue + 1).toString(),
-        groupSeparator: '.',
-        decimalSeparator: ",",
-        decimalScale: 2
-      })
-
-      console.log(strValue.current)
-      handleChange(refineNumber(strValue.current))
+      let numValue = formatStringValueToNumber(strValue);
+      let newValue = String(
+        e.key === "ArrowDown" ? numValue - 1 : numValue + 1
+      );
+      updateValues(newValue);
     }
-  }, [value, strValue.current]);
+    props.onKeyDown && props.onKeyDown(e);
+  };
 
-  const onChangeValue = useCallback((valueChanged?: string) => {
-    if (valueChanged) {
-      strValue.current = valueChanged;
-      handleChange(refineNumber(valueChanged))
-    }
-  }, [value, strValue.current])
+  const handleValueChange = (event) => {
+    updateValues(event.target.value);
+  };
 
-  const refineNumber = (value: string) => {
-    return Number(value.replace(",", "."));
-  }
+  const updateValues = (newValue: string) => {
+    setStrValue(formatValueToCurrency(newValue));
+    handleChange(formatStringValueToNumber(newValue));
+  };
+
+  const onBlur = (e) => {
+    let decimal = strValue.split(",")[1];
+    setStrValue((prev) =>
+      decimal ? (decimal.length === 1 ? prev + "0" : prev) : prev + ",00"
+    );
+
+    props.onBlur && props.onBlur(e);
+  };
 
   return (
     <Container css={props.cssContainer}>
-      {props.idLabel &&
-        <Label>{formatMessage({ id: props.idLabel })}</Label>
-      }
-      <CurrencyInputStyled
-        intlConfig={{ locale: 'pt-BR', currency: 'BRL' }}
-        name={name}
-        value={strValue.current}
-        disabled={disabled}
-        onValueChange={onChangeValue}
+      {props.idLabel && <Label>{formatMessage({ id: props.idLabel })}</Label>}
+      <Input
+        type="text"
+        value={strValue}
+        onChange={handleValueChange}
+        onBlur={onBlur}
         onKeyDown={handleArrowKeys}
-        allowNegativeValue={false}
-        fixedDecimalLength={2}
-
       />
       {children}
     </Container>
   );
-}
+};
 
 export default InputCurrency;
