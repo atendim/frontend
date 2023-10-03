@@ -1,0 +1,43 @@
+version: 2.1
+
+orbs:
+  node: circleci/node@4.7
+
+jobs:       
+  install-packages:
+    executor: node/default
+    steps:
+      - checkout
+      - node/install-packages:
+          pkg-manager: npm
+
+  run-tests:
+    executor: node/default
+    steps:
+      - checkout
+      - run:
+          command: npm run test
+          name: Run tests
+          
+  build:
+    executor: node/default
+    steps:
+      - checkout
+      - run:
+          command: npm run build
+          name: Build app
+
+workflows:
+  ci_workflow:
+    jobs:
+      - install-packages:
+          name: Install Packages
+      - run-tests:
+          name: Run Tests
+          requires:
+            - install-packages
+      - build:
+          name: Build App
+          requires:
+            - run-tests
+      
