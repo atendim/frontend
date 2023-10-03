@@ -35,10 +35,10 @@ workflows:
       - run-tests:
           name: Run Tests
           requires:
-            - install-packages
+            - Install Packages
       - build:
           name: Build App
           requires:
-            - run-tests
+            - Run Tests
 
       
