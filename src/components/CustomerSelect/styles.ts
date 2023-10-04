@@ -1,6 +1,4 @@
 import { styled } from "../../theme/stitches.config";
-import { Button } from "../Button";
-import { BaseButton } from "../Button/styles";
 import { LabelBase } from "../Fields/Base";
 
 export const Container = styled('div', {
