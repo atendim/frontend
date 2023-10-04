@@ -4,41 +4,20 @@ orbs:
   node: circleci/node@5.1.0
 
 jobs:       
-  install-packages:
+  test_and_build:
     executor: node/default
     steps:
       - checkout
       - node/install-packages:
           pkg-manager: npm
-
-  run-tests:
-    executor: node/default
-    steps:
-      - checkout
       - run:
           command: npm run test
           name: Run tests
-          
-  build:
-    executor: node/default
-    steps:
-      - checkout
       - run:
           command: npm run build
           name: Build app
-
+      
 workflows:
   ci_workflow:
     jobs:
-      - install-packages:
-          name: Install Packages
-      - run-tests:
-          name: Run Tests
-          requires:
-            - Install Packages
-      - build:
-          name: Build App
-          requires:
-            - Run Tests
-
-      
+      - test_and_build
